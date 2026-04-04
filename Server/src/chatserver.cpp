@@ -12,15 +12,15 @@ bool ChatServer::startServer(quint16 port){
     return false;
 }
 
-void ChatServer::incomingConnection(qintptr socketDescriptior){
+void ChatServer::incomingConnection(qintptr socketDescriptor){
     QTcpSocket *clientSocket = new QTcpSocket(this);
 
-    if(clientSocket->setSocketDescriptior(socketSescriptor)){
+    if(clientSocket->setSocketDescriptor(socketDescriptor)){
         connect(clientSocket, &QTcpSocket::readyRead, this, &ChatServer::onReadyRead);
-        connect(clientSocket, &QTcpSocket::diconnected, this, &ChatSrver::onDisconnected);
+        connect(clientSocket, &QTcpSocket::disconnected, this, &ChatServer::onDisconnected);
 
         m_clients.append(clientSocket);
-        qDebug() << "New client connected! " << m_clients.size() << " clients in total." 
+        qDebug() << "New client connected! " << m_clients.size() << " clients in total.";
     } else {
         delete clientSocket;
     }
@@ -33,7 +33,7 @@ void ChatServer::onReadyRead(){
     QByteArray data  = senderSocket->readAll();
 
     for(QTcpSocket *client : m_clients){
-        if(client->state() == QAbstract::ConnectedState){
+        if(client->state() == QAbstractSocket::ConnectedState){
             client->write(data);
             client->flush();
         }
@@ -41,10 +41,10 @@ void ChatServer::onReadyRead(){
 }
 
 void ChatServer::onDisconnected(){
-    QTcpSocket *senderSocket = qobject_cast<QTcpSocket>(sender());
+    QTcpSocket *senderSocket = qobject_cast<QTcpSocket*>(sender());
     if(!senderSocket) return;
 
-    m_clients.removeAll(sendersocket);
+    m_clients.removeAll(senderSocket);
     qDebug() << "Client disconnected! " << m_clients.size() << "clients in total.";
 
     senderSocket->deleteLater();

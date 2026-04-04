@@ -12,7 +12,7 @@ class ChatServer: public QTcpServer{
         bool startServer(quint16 port);
     
     protected:
-        void incomangConnection(qintptr socketDescriptior) override;
+        void incomingConnection(qintptr socketDescriptior) override;
 
     private slots:
         void onReadyRead();

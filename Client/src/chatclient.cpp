@@ -14,7 +14,7 @@ void ChatClient::connectToServer(const QString &ip, quint16 port){
     m_socket->connectToHost(ip, port);
 }
 
-void ChatClient::sendMassage(const QByteArray &massage){
+void ChatClient::sendMessage(const QByteArray &massage){
     if(m_socket->state() == QAbstractSocket::ConnectedState){
         m_socket->write(massage);
         m_socket->flush();
@@ -25,7 +25,7 @@ void ChatClient::disconnectFromServer(){
     m_socket->disconnectFromHost();
 }
 
-void onReadyRead(){
+void ChatClient::onReadyRead(){
     QByteArray data = m_socket->readAll();
-    emit massageRecieved(data);
+    emit messageReceived(data);
 }

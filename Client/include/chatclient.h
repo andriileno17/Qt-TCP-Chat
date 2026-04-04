@@ -4,27 +4,27 @@
 #include <QObject>
 #include <QTcpSocket>
 
-class ChatClient: public QObject{
+class ChatClient : public QObject {
     Q_OBJECT
+
+public:
+    explicit ChatClient(QObject *parent = nullptr);
     
-    public:
-        explicit ChatClient(QObject *parent = nullptr);
+    void connectToServer(const QString &ip, quint16 port);
+    void sendMessage(const QByteArray &message);
+    void disconnectFromServer();
 
-        void connectToServer(const QString &ip, quint16 port);
-        void sendMassage(const QByteArray &massage);
-        void disconnectFromServer();
+signals:
+    void connected();
+    void disconnected();
+    void messageReceived(const QByteArray &message);
+    void errorOccurred(const QString &errorString);
 
-    signals:
-        void connected();
-        void disconnected();
-        void massageRecieved(const QByteArray &massage);
-        void errorOccurred(const QString &errorString);
+private slots:
+    void onReadyRead();
 
-    private slots:
-        void onReadyRead();
-
-    private:
-        QTcpSocket *m_socket;
+private:
+    QTcpSocket *m_socket;
 };
 
 #endif
