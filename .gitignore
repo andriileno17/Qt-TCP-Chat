@@ -1,0 +1,46 @@
+# --- Build Directories ---
+# Головна папка збірки, яку ми обговорювали
+build/
+bin/
+lib/
+
+# --- CMake ---
+# Тимчасові файли конфігурації CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+install_manifest.txt
+Makefile
+
+# --- Qt / IDE (Qt Creator) ---
+# Локальні налаштування проекту (шляхи до твоїх компіляторів, сесії тощо)
+*.user
+*.user.*
+.qtc_clangd/
+
+# --- C++ Artifacts ---
+# Об'єктні файли та статичні бібліотеки
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+
+# --- Linux / Fedora Specific ---
+# Тимчасові файли текстових редакторів та системи
+*~
+.directory
+.fuse_hidden*
+.trash*
+.nfs*
+
+# --- IDE specific ---
+# Якщо захочеш відкрити проект у VS Code або CLion
+.vscode/
+.idea/
+cmake-build-*/
