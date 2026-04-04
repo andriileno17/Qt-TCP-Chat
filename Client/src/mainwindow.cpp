@@ -14,6 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
     chatDisplay = new QTextEdit(this);
     chatDisplay->setReadOnly(true);
 
+    nicknameLineEdit = new QLineEdit(this);
+    nicknameLineEdit->setPlaceholderText("Нік...");
+    nicknameLineEdit->setFixedWidth(100);
+
     messageLineEdit = new QLineEdit(this);
     messageLineEdit->setPlaceholderText("Введіть повідомлення...");
 
@@ -23,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
     QHBoxLayout *bottomLayout = new QHBoxLayout();
     
+    bottomLayout->addWidget(nicknameLineEdit);
     bottomLayout->addWidget(messageLineEdit);
     bottomLayout->addWidget(sendButton);
 
@@ -49,8 +54,17 @@ void MainWindow::onConnectClicked() {
 
 void MainWindow::onSendClicked() {
     QString text = messageLineEdit->text();
-    if (!text.isEmpty()) {
-        m_client->sendMessage(text.toUtf8());
+    QString nickname = nicknameLineEdit->text();
+
+    if (nickname.isEmpty()) {
+        nickname = "Анонім";
+    }
+
+if (!text.isEmpty()) {
+        QString fullMessage = nickname + ": " + text;
+        
+        m_client->sendMessage(fullMessage.toUtf8());
+        
         messageLineEdit->clear();
     }
 }
@@ -65,7 +79,7 @@ void MainWindow::onClientDisconnected() {
 }
 
 void MainWindow::onMessageReceived(const QByteArray &message) {
-    chatDisplay->append("Хтось: " + QString::fromUtf8(message));
+    chatDisplay->append(QString::fromUtf8(message));
 }
 
 void MainWindow::onError(const QString &error) {

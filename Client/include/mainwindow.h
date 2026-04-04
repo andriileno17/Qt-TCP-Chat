@@ -29,6 +29,7 @@ class MainWindow: public QMainWindow{
         ChatClient *m_client;
 
         QTextEdit *chatDisplay;
+        QLineEdit *nicknameLineEdit;
         QLineEdit *messageLineEdit;
         QPushButton *connectButton;
         QPushButton *sendButton;
